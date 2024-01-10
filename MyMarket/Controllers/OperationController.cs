@@ -1,36 +1,35 @@
-﻿using BAL.Services;
+﻿using Azure;
+using BAL.Services;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using MyMarket.Interface;
-using MyMarket.Models;
-using MyMarket.Services;
 using static DAL.Enum;
 
-namespace MyMarket.Controllers
+namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class OperationController : ControllerBase
     {
-        private readonly CategoryService _categoryService;
+        private readonly OperationService _operationService;
 
-        public CategoryController()
+        public OperationController()
         {
-            _categoryService = new CategoryService();
+            _operationService = new OperationService();
         }
 
         [HttpPost]
-        public IActionResult AddCategory([FromBody] Category category)
+        public IActionResult AddOperation([FromBody] Operationn operation)
         {
             try
             {
-                EnumResult action = _categoryService.Add(category);
+                EnumResult action = _operationService.Add(operation);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category added successfully");
+                        return Ok("Operation added successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to add category");
+                        return BadRequest("Failed to add operation");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -42,11 +41,11 @@ namespace MyMarket.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllCategories()
+        public IActionResult GetAllOperations()
         {
             try
             {
-                return Ok(_categoryService.GetAll());
+                return Ok(_operationService.GetAll());
             }
             catch (Exception ex)
             {
@@ -54,22 +53,19 @@ namespace MyMarket.Controllers
             }
         }
 
-
-
-
         [HttpPut("{id}")]
-        public IActionResult UpdateCategory([FromBody] Category category)
+        public IActionResult UpdateOperation([FromBody] Operationn operation)
         {
             try
             {
-                EnumResult action = _categoryService.Update(category);
+                EnumResult action = _operationService.Update(operation);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category updated successfully");
+                        return Ok("Operation updated successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to update category");
+                        return BadRequest("Failed to update operation");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -81,18 +77,18 @@ namespace MyMarket.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteOperation(int id)
         {
             try
             {
-                EnumResult action = _categoryService.Delete(id);
+                EnumResult action = _operationService.Delete(id);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category deleted successfully");
+                        return Ok("Operation deleted successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to delete category");
+                        return BadRequest("Failed to delete operation");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -103,5 +99,5 @@ namespace MyMarket.Controllers
             }
         }
     }
-    
+
 }

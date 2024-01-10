@@ -1,36 +1,36 @@
 ﻿using BAL.Services;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using MyMarket.Interface;
 using MyMarket.Models;
 using MyMarket.Services;
 using static DAL.Enum;
 
-namespace MyMarket.Controllers
+namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class ItemController : ControllerBase
     {
-        private readonly CategoryService _categoryService;
+        private readonly ItemService _itemService;
 
-        public CategoryController()
+        public ItemController()
         {
-            _categoryService = new CategoryService();
+            _itemService = new ItemService();
         }
 
         [HttpPost]
-        public IActionResult AddCategory([FromBody] Category category)
+        public IActionResult AddItem([FromBody] Item item)
         {
             try
             {
-                EnumResult action = _categoryService.Add(category);
+                EnumResult action = _itemService.Add(item);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category added successfully");
+                        return Ok("Item added successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to add category");
+                        return BadRequest("Failed to add item");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -42,11 +42,11 @@ namespace MyMarket.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllCategories()
+        public IActionResult GetAllItems()
         {
             try
             {
-                return Ok(_categoryService.GetAll());
+                return Ok(_itemService.GetAll());
             }
             catch (Exception ex)
             {
@@ -58,18 +58,18 @@ namespace MyMarket.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult UpdateCategory([FromBody] Category category)
+        public IActionResult UpdateItem([FromBody] Item item)
         {
             try
             {
-                EnumResult action = _categoryService.Update(category);
+                EnumResult action = _itemService.Update(item);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category updated successfully");
+                        return Ok("Item updated successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to update category");
+                        return BadRequest("Failed to update Item");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -81,18 +81,18 @@ namespace MyMarket.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteItem(int id)
         {
             try
             {
-                EnumResult action = _categoryService.Delete(id);
+                EnumResult action = _itemService.Delete(id);
 
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category deleted successfully");
+                        return Ok("Item deleted successfully");
                     case EnumResult.Fail:
-                        return BadRequest("Failed to delete category");
+                        return BadRequest("Failed to delete item");
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
@@ -103,5 +103,4 @@ namespace MyMarket.Controllers
             }
         }
     }
-    
 }
