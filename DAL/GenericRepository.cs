@@ -30,6 +30,23 @@ namespace BAL.Services
             return _dbManager.ExecuteMethod(sql);
         }
 
+        public int AddHeader(string sql)
+        {
+            return _dbManager.ExecuteTransaction(sql);
+        }
+
+        //public int AddHeader(string sql)
+        //{
+        //    EnumResult result = _dbManager.ExecuteTransaction(sql);
+        //    _dbManager.GetById(sql); // get the id of the OperationId (PK)
+        //    return result;
+        //}
+
+        //public EnumResult AddDetail(string sql)
+        //{
+        //    return _dbManager.ExecuteTransaction(sql);
+        //}
+
         public EnumResult Delete(string sql)
         {
             return _dbManager.ExecuteMethod(sql);
@@ -39,6 +56,11 @@ namespace BAL.Services
         {
             return _dbManager.GetAll(sql);
         }
+
+        //public T GetById(string sql)
+        //{
+        //    return _dbManager.GetById(sql);
+        //}
 
         public EnumResult Update(string sql)
         {

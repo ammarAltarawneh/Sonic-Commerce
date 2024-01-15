@@ -17,7 +17,7 @@ namespace DAL.Managers
       
         public EnumResult Add(Category category)
         {
-            string sql = $"INSERT INTO Category (CategoryName) VALUES ('{category.CategoryName}')";
+            string sql = $"INSERT INTO Category (CategoryName,UserId) VALUES ('{category.CategoryName}',{category.UserId})";
             return _genericRepository.Add(sql);
         }
 
@@ -29,7 +29,7 @@ namespace DAL.Managers
 
         public EnumResult Update(Category category)
         {
-            string sql = $"UPDATE Category SET CategoryName = '{category.CategoryName}' WHERE CategoryId = {category.CategoryId}";
+            string sql = $"UPDATE Category SET CategoryName = '{category.CategoryName}', UserId = {category.UserId} WHERE CategoryId = {category.CategoryId}";
             return _genericRepository.Update(sql);
         }
 

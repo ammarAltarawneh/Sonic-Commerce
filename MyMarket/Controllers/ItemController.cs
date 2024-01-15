@@ -28,7 +28,7 @@ namespace Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Item added successfully");
+                        return Ok(item);
                     case EnumResult.Fail:
                         return BadRequest("Failed to add item");
                     default:
@@ -55,8 +55,6 @@ namespace Controllers
         }
 
 
-
-
         [HttpPut("{id}")]
         public IActionResult UpdateItem([FromBody] Item item)
         {
@@ -67,7 +65,7 @@ namespace Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Item updated successfully");
+                        return Ok(item);
                     case EnumResult.Fail:
                         return BadRequest("Failed to update Item");
                     default:

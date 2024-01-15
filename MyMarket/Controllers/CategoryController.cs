@@ -28,7 +28,7 @@ namespace MyMarket.Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category added successfully");
+                        return Ok(category);
                     case EnumResult.Fail:
                         return BadRequest("Failed to add category");
                     default:
@@ -67,7 +67,7 @@ namespace MyMarket.Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Category updated successfully");
+                        return Ok(category);
                     case EnumResult.Fail:
                         return BadRequest("Failed to update category");
                     default:

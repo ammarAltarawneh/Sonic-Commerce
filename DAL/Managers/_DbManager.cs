@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using MyMarket.Interface;
 using MyMarket.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using static DAL.Enum;
 
 namespace DAL.Managers
@@ -46,11 +48,37 @@ namespace DAL.Managers
                 finally 
                 { 
                     dbConnection.Close(); 
-                }
-            
+                }            
           }
         }
-        
+
+        public int ExecuteTransaction(string query)
+        {
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                    try
+                    {
+                        dbConnection.Open();
+                        return Convert.ToInt32(dbConnection.ExecuteScalar(query));
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("SQL Error occurred:- " + ex.Message);
+                        return -1;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error occurred:- " + ex.Message);
+                        return -1;
+                    }
+                    finally
+                    {
+                        dbConnection.Close();
+                    }              
+
+            }
+        }
+
         public IEnumerable<T> GetAll(string query)
         {
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
@@ -60,5 +88,15 @@ namespace DAL.Managers
 
             }
         }
+
+        //public T GetById(string query)
+        //{
+        //    using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+        //    {
+        //        dbConnection.Open();
+        //        return dbConnection.QuerySingle(query);
+
+        //    }
+        //}
     }
 }

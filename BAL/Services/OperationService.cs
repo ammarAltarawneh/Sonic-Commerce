@@ -23,7 +23,10 @@ namespace BAL.Services
         {
             try
             {
-                return _operationManager.Add(operation);
+                //int id = -1;
+                EnumResult result = _operationManager.AddTransaction(operation);
+
+                return result;
             }
             catch (Exception ex)
             {

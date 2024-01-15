@@ -17,5 +17,6 @@ namespace DAL.Models
         public decimal DiscountTotal { get; set; }
         public decimal GrossTotal { get; set; }
         public decimal NetTotal { get; set; }
+        public List<OperationDetail> operationDetail { get; set; }
     }
 }

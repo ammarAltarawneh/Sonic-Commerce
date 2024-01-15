@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyMarket.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace DAL.Models
     internal class User
     {
         public int UserId { get; set; }
+        public int Role { get; set; }
         public string? UserName { get; set; }
         public string? Passwordd { get; set; }
     }

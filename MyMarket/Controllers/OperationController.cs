@@ -27,7 +27,7 @@ namespace Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Operation added successfully");
+                        return Ok(operation);
                     case EnumResult.Fail:
                         return BadRequest("Failed to add operation");
                     default:
@@ -63,7 +63,7 @@ namespace Controllers
                 switch (action)
                 {
                     case EnumResult.Success:
-                        return Ok("Operation updated successfully");
+                        return Ok(operation);
                     case EnumResult.Fail:
                         return BadRequest("Failed to update operation");
                     default:
