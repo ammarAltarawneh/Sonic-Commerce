@@ -52,7 +52,7 @@ namespace DAL.Managers
                                          $"'{operation.OperationDate:yyyy-MM-dd HH:mm:ss}', {operation.TaxTotal}, {operation.DiscountTotal}, {operation.GrossTotal}, {operation.NetTotal}) " +
                                          $"SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
-                    int operationId =_genericRepository.AddHeader(operationSql);
+                    int operationId =_genericRepository.AddHeader(operationSql); // execute and get OperationId for the new record
 
                     if (operationId > 0)
                     {
