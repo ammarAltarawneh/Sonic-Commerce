@@ -89,14 +89,14 @@ namespace DAL.Managers
             }
         }
 
-        //public T GetById(string query)
-        //{
-        //    using (IDbConnection dbConnection = new SqlConnection(_connectionString))
-        //    {
-        //        dbConnection.Open();
-        //        return dbConnection.QuerySingle(query);
+        public T GetSingle(string query)
+        {
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+                dbConnection.Open();
+                return dbConnection.QuerySingle(query);
 
-        //    }
-        //}
+            }
+        }
     }
 }

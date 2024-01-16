@@ -1,10 +1,13 @@
 
 using BAL.Services;
 using DAL.Managers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using MyMarket.Interface;
 using MyMarket.Models;
 using MyMarket.Services;
 using System.Collections.Generic;
+using System.Text;
 
 namespace MyMarket
 {
@@ -13,7 +16,9 @@ namespace MyMarket
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+            //var jwtSettings = builder.Configuration.GetSection("JWT");
+
+
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
@@ -21,6 +26,22 @@ namespace MyMarket
             var connection = configuration.GetSection("DefaultConnection").Value;
 
              builder.Services.AddScoped(typeof(ICrudOperation<>), typeof(GenericRepository<>));
+
+            //builder.Services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
+            //    };
+            //});
 
             // Add services to the container.
 

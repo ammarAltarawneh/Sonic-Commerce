@@ -11,6 +11,7 @@ namespace MyMarket.Interface
         //EnumResult AddHeader(ref int id, string sql);
         //EnumResult AddDetail(string sql);
         int AddHeader(string sql);
+        T GetUser(string sql);
 
     }
 }

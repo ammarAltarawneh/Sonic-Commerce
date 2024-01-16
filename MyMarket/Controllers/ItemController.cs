@@ -1,5 +1,6 @@
 ﻿using BAL.Services;
 using DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyMarket.Models;
 using MyMarket.Services;
@@ -7,6 +8,7 @@ using static DAL.Enum;
 
 namespace Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase

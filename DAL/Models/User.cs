@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace DAL.Models
 {
-    internal class User
+    public class User
     {
         public int UserId { get; set; }
         public int Role { get; set; }
         public string? UserName { get; set; }
         public string? Passwordd { get; set; }
+        public string? Token { get; set; }
     }
 }

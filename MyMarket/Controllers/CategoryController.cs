@@ -1,4 +1,5 @@
 ﻿using BAL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyMarket.Interface;
 using MyMarket.Models;
@@ -7,6 +8,7 @@ using static DAL.Enum;
 
 namespace MyMarket.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
