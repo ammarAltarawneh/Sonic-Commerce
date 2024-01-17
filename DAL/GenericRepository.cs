@@ -57,9 +57,9 @@ namespace BAL.Services
             return _dbManager.GetAll(sql);
         }
 
-        public T GetUser(string sql)
+        public T GetById(string sql)
         {
-            return _dbManager.GetSingle(sql);
+            return _dbManager.GetSingle<T>(sql);
         }
 
         public EnumResult Update(string sql)

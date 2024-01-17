@@ -23,10 +23,16 @@ namespace Managers
             return _genericRepository.GetAll(sql);
         }
 
-        public User GetUser(User user)
+        public User GetById(int id)
         {
-            string sql = $"SELECT * FROM Users WHERE UserName = {user.UserName} AND Passwordd = {user.Passwordd};";
-            return _genericRepository.GetUser(sql);
+            string sql = $"SELECT * FROM Users WHERE UserId = {id};";
+            return _genericRepository.GetById(sql);
+        }
+
+        public User GetUser(string username, string password)
+        {
+            var sql = $"SELECT * FROM Users WHERE UserName = '{username}' AND Passwordd = '{password}';"; ;
+            return _genericRepository.GetById(sql);
         }
     }
 }

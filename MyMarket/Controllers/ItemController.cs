@@ -8,7 +8,7 @@ using static DAL.Enum;
 
 namespace Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase
@@ -20,6 +20,7 @@ namespace Controllers
             _itemService = new ItemService();
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AddItem([FromBody] Item item)
         {
@@ -42,7 +43,7 @@ namespace Controllers
                 return StatusCode(500, new { message = "Internal server error", error = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllItems()
         {
@@ -56,7 +57,7 @@ namespace Controllers
             }
         }
 
-
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateItem([FromBody] Item item)
         {
@@ -79,7 +80,7 @@ namespace Controllers
                 return StatusCode(500, new { message = "Internal server error", error = ex.Message });
             }
         }
-
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
         {

@@ -89,12 +89,12 @@ namespace DAL.Managers
             }
         }
 
-        public T GetSingle(string query)
+        public T GetSingle<T>(string query)
         {
             using (IDbConnection dbConnection = new SqlConnection(_connectionString))
             {
                 dbConnection.Open();
-                return dbConnection.QuerySingle(query);
+                return dbConnection.QuerySingle<T>(query);
 
             }
         }

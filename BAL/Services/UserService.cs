@@ -23,9 +23,14 @@ namespace Services
             return _userManager.GetAll();
         }
 
-        public User GetUser(User user)
+        public User GetById(int id)
         {
-            return _userManager.GetUser(user);
+            return _userManager.GetById(id);
+        }
+
+        public User GetUser(string username, string password)
+        {
+            return _userManager.GetUser(username, password);
         }
 
     }

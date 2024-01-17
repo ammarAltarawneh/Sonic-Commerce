@@ -3,6 +3,7 @@ using BAL.Services;
 using DAL.Managers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using MyMarket.Interface;
 using MyMarket.Models;
 using MyMarket.Services;
@@ -16,7 +17,7 @@ namespace MyMarket
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            //var jwtSettings = builder.Configuration.GetSection("JWT");
+            var jwtSettings = builder.Configuration.GetSection("JWT");
 
 
             var configuration = new ConfigurationBuilder()
@@ -27,21 +28,21 @@ namespace MyMarket
 
              builder.Services.AddScoped(typeof(ICrudOperation<>), typeof(GenericRepository<>));
 
-            //builder.Services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //.AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
-            //    };
-            //});
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Secret"]))
+                };
+            });
 
             // Add services to the container.
 
@@ -49,6 +50,29 @@ namespace MyMarket
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "JWT Authentication",
+                    Description = "Enter your JWT token",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            { securityScheme, new List<string>() }
+        });
+            });
 
 
 

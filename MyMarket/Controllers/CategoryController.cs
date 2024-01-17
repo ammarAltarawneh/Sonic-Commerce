@@ -8,7 +8,7 @@ using static DAL.Enum;
 
 namespace MyMarket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
