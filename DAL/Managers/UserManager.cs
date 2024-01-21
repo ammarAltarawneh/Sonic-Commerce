@@ -1,11 +1,5 @@
 ﻿using BAL.Services;
 using DAL.Models;
-using MyMarket.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Managers
 {
@@ -21,12 +15,6 @@ namespace Managers
         {
             string sql = "SELECT * FROM Users;";
             return _genericRepository.GetAll(sql);
-        }
-
-        public User GetById(int id)
-        {
-            string sql = $"SELECT * FROM Users WHERE UserId = {id};";
-            return _genericRepository.GetById(sql);
         }
 
         public User GetUser(string username, string password)

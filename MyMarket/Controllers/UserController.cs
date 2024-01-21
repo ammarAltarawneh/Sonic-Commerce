@@ -14,7 +14,7 @@ namespace Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UserController : ControllerBase
     {
         private readonly UserService _userService;
         private readonly IConfiguration _configuration;
@@ -25,25 +25,13 @@ namespace Controllers
             _configuration = configuration;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllUsers()
         {
             try
             {
                 return Ok(_userService.GetAll());
-            }
-            catch (Exception ex)
-            {
-                return HandleException(ex);
-            }
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            try
-            {
-                return Ok(_userService.GetById(id));
             }
             catch (Exception ex)
             {

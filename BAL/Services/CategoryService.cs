@@ -1,5 +1,7 @@
 ﻿using BAL.Services;
+using DAL;
 using DAL.Managers;
+using DAL.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -14,10 +16,14 @@ namespace MyMarket.Services
     public class CategoryService 
     {
         private readonly CategoryManager _categoryManager;
-
         public CategoryService()
         {
             _categoryManager = new CategoryManager();
+        }
+
+        public IEnumerable<Category> GetAllCategoriesByAuthUser(User user)
+        {
+            return _categoryManager.GetAllCategoriesByAuthUser(user);
         }
 
         public EnumResult Add(Category category)
@@ -56,12 +62,7 @@ namespace MyMarket.Services
                 Console.WriteLine("Exception occured " + ex.ToString());
                 return EnumResult.Fail;
             }
-        }
-
-        public IEnumerable<Category> GetAll()
-        {
-             return _categoryManager.GetAll();
-        }
+        }        
 
     }
 }

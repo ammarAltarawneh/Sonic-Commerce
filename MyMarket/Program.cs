@@ -1,13 +1,8 @@
-
 using BAL.Services;
-using DAL.Managers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyMarket.Interface;
-using MyMarket.Models;
-using MyMarket.Services;
-using System.Collections.Generic;
 using System.Text;
 
 namespace MyMarket
@@ -27,6 +22,8 @@ namespace MyMarket
             var connection = configuration.GetSection("DefaultConnection").Value;
 
              builder.Services.AddScoped(typeof(ICrudOperation<>), typeof(GenericRepository<>));
+            //builder.Services.AddScoped<User>();
+
 
             builder.Services.AddAuthentication(options =>
             {
@@ -47,7 +44,6 @@ namespace MyMarket
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSwaggerGen(c =>
@@ -69,12 +65,10 @@ namespace MyMarket
                 };
                 c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
+                {
             { securityScheme, new List<string>() }
-        });
+               });
             });
-
-
 
             builder.Services.AddCors(options =>
             {

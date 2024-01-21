@@ -13,12 +13,10 @@ namespace DAL.Managers
     public class ItemManager
     {
         private readonly GenericRepository<Item> _genericRepository;
-
         public ItemManager()
         {
             _genericRepository = new GenericRepository<Item>();
         }
-
 
         public EnumResult Add(Item item)
         {

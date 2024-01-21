@@ -1,16 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using MyMarket.Interface;
-using MyMarket.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using static DAL.Enum;
 
 namespace DAL.Managers
@@ -74,8 +64,7 @@ namespace DAL.Managers
                     finally
                     {
                         dbConnection.Close();
-                    }              
-
+                    }
             }
         }
 
@@ -85,7 +74,6 @@ namespace DAL.Managers
             {
                 dbConnection.Open();
                 return dbConnection.Query<T>(query).ToList();
-
             }
         }
 

@@ -1,17 +1,5 @@
 ﻿using DAL.Managers;
-using Microsoft.Extensions.Configuration;
 using MyMarket.Interface;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Common;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections;
-using MyMarket.Models;
 using static DAL.Enum;
 
 namespace BAL.Services
@@ -34,18 +22,6 @@ namespace BAL.Services
         {
             return _dbManager.ExecuteTransaction(sql);
         }
-
-        //public int AddHeader(string sql)
-        //{
-        //    EnumResult result = _dbManager.ExecuteTransaction(sql);
-        //    _dbManager.GetById(sql); // get the id of the OperationId (PK)
-        //    return result;
-        //}
-
-        //public EnumResult AddDetail(string sql)
-        //{
-        //    return _dbManager.ExecuteTransaction(sql);
-        //}
 
         public EnumResult Delete(string sql)
         {

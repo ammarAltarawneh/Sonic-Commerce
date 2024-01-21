@@ -1,4 +1,5 @@
 ﻿using BAL.Services;
+using DAL.Models;
 using MyMarket.Interface;
 using MyMarket.Models;
 using static DAL.Enum;
@@ -8,22 +9,20 @@ namespace DAL.Managers
     public class CategoryManager
     {
         private readonly GenericRepository<Category> _genericRepository;
-
         public CategoryManager()
         {
             _genericRepository = new GenericRepository<Category>();
         }
 
-      
         public EnumResult Add(Category category)
         {
             string sql = $"INSERT INTO Category (CategoryName,UserId) VALUES ('{category.CategoryName}',{category.UserId})";
             return _genericRepository.Add(sql);
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> GetAllCategoriesByAuthUser(User user)
         {
-            string sql = "SELECT * FROM Category";
+            string sql = $"SELECT * FROM Category WHERE UserId = {user.UserId};";
             return _genericRepository.GetAll(sql);
         }
 
@@ -38,7 +37,5 @@ namespace DAL.Managers
             string sql = $"DELETE FROM Category WHERE CategoryId = {id}";
             return _genericRepository.Delete(sql);
         }
-
-
     }
 }

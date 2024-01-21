@@ -1,11 +1,7 @@
 ﻿using Azure;
 using DAL.Managers;
 using DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Models;
 using static DAL.Enum;
 
 namespace BAL.Services
@@ -23,7 +19,6 @@ namespace BAL.Services
         {
             try
             {
-                //int id = -1;
                 EnumResult result = _operationManager.AddTransaction(operation);
 
                 return result;
@@ -61,7 +56,7 @@ namespace BAL.Services
             }
         }
 
-        public IEnumerable<Operationn> GetAll()
+        public IEnumerable<OperationInAngular> GetAll()
         {
             return _operationManager.GetAll();
         }

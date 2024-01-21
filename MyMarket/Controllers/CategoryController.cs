@@ -1,25 +1,48 @@
 ﻿using BAL.Services;
+using Controllers;
+using DAL;
+using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyMarket.Interface;
 using MyMarket.Models;
 using MyMarket.Services;
 using static DAL.Enum;
 
 namespace MyMarket.Controllers
-{
-    [Authorize(Roles="admin")]
+{    
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController : SharedController
     {
         private readonly CategoryService _categoryService;
 
-        public CategoryController()
+        public CategoryController(IConfiguration configuration):base(configuration)
         {
             _categoryService = new CategoryService();
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetAllCategories()
+        {
+            
+            try
+            {
+                var currentUser = CurrentUser;
+
+                if (currentUser != null)
+                {
+                    var categories = _categoryService.GetAllCategoriesByAuthUser(currentUser);
+                    return Ok(categories);
+                }
+                return Unauthorized(new { message = "User not authenticated." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
+        }
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AddCategory([FromBody] Category category)
         {
@@ -43,22 +66,7 @@ namespace MyMarket.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult GetAllCategories()
-        {
-            try
-            {
-                return Ok(_categoryService.GetAll());
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
-            }
-        }
-
-
-
-
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public IActionResult UpdateCategory([FromBody] Category category)
         {
@@ -82,6 +90,7 @@ namespace MyMarket.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)
         {
