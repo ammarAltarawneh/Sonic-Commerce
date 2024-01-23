@@ -1,9 +1,11 @@
 ﻿using BAL.Services;
 using Controllers;
 using DAL;
+using DAL.Managers;
 using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using MyMarket.Models;
 using MyMarket.Services;
 using static DAL.Enum;
@@ -15,25 +17,27 @@ namespace MyMarket.Controllers
     public class CategoryController : SharedController
     {
         private readonly CategoryService _categoryService;
+        private readonly IUser _user;
 
-        public CategoryController(IConfiguration configuration):base(configuration)
+        public CategoryController(IConfiguration configuration, IUser user)
+            : base(configuration, user)
         {
-            _categoryService = new CategoryService();
+            _user = user;
+            _categoryService = new CategoryService(_user);
         }
 
         [Authorize]
         [HttpGet]
         public IActionResult GetAllCategories()
-        {
-            
+        {           
             try
             {
                 var currentUser = CurrentUser;
 
                 if (currentUser != null)
                 {
-                    var categories = _categoryService.GetAllCategoriesByAuthUser(currentUser);
-                    return Ok(categories);
+                    CategoryService categories = new CategoryService(currentUser);
+                    return Ok(categories.GetAll());
                 }
                 return Unauthorized(new { message = "User not authenticated." });
             }

@@ -1,14 +1,12 @@
-﻿using Models;
-using MyMarket.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Models
+namespace Models
 {
-    public class User : IUser
+    public interface IUser
     {
         public int UserId { get; set; }
         public string? Role { get; set; }

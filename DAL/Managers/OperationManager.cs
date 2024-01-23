@@ -11,12 +11,26 @@ namespace DAL.Managers
         private readonly GenericRepository<Operationn> _genericRepository;
         private readonly GenericRepository<OperationDetail> _operationDetailRepository;
         private readonly GenericRepository<OperationInAngular> _operationInAngularRepo;
+        private readonly IUser _user;
 
-        public OperationManager()
+        public OperationManager(IUser user)
         {
             _genericRepository = new GenericRepository<Operationn>();
             _operationDetailRepository = new GenericRepository<OperationDetail>();
             _operationInAngularRepo = new GenericRepository<OperationInAngular>();
+            _user = user;
+        }
+
+        public IEnumerable<OperationInAngular> GetAll()
+        {
+            string sql =  $"SELECT O.OperationId, OT.OperationTypeName, C.CustomerName, O.OperationDate, O.NetTotal, O.GrossTotal " +
+                          $"FROM Operation AS O " +
+                          $"JOIN OperationType AS OT ON O.OperationTypeId = OT.OperationTypeId " +
+                          $"JOIN Customer AS C ON O.CustomerId = C.CustomerId " +
+                          $"WHERE O.UserId = {_user.UserId} " +
+                          $"ORDER BY O.OperationId ASC;";
+
+            return _operationInAngularRepo.GetAll(sql);
         }
 
         public EnumResult AddTransaction(Operationn operation)
@@ -60,16 +74,6 @@ namespace DAL.Managers
                     return EnumResult.Fail;
                 }
             }
-        }
-
-        public IEnumerable<OperationInAngular> GetAll()
-        {
-            string sql = "SELECT O.OperationId, OT.OperationTypeName, C.CustomerName, O.OperationDate, O.NetTotal, O.GrossTotal " +
-                          "FROM Operation AS O " +
-                          "JOIN OperationType AS OT ON O.OperationTypeId = OT.OperationTypeId " +
-                          "JOIN Customer AS C ON O.CustomerId = C.CustomerId " +
-                          "ORDER BY O.OperationId ASC;";
-            return _operationInAngularRepo.GetAll(sql);
         }
 
         public EnumResult Update(Operationn operation)

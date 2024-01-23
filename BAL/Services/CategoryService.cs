@@ -5,6 +5,7 @@ using DAL.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Models;
 using MyMarket.Interface;
 using MyMarket.Models;
 using System.Data;
@@ -15,15 +16,17 @@ namespace MyMarket.Services
 {
     public class CategoryService 
     {
-        private readonly CategoryManager _categoryManager;
-        public CategoryService()
-        {
-            _categoryManager = new CategoryManager();
-        }
+    private readonly CategoryManager _categoryManager;
+    private readonly IUser _user;
+    public CategoryService(IUser user)
+    {
+        _user = user;
+        _categoryManager = new CategoryManager(user);
+    }
 
-        public IEnumerable<Category> GetAllCategoriesByAuthUser(User user)
+        public IEnumerable<Category> GetAll()
         {
-            return _categoryManager.GetAllCategoriesByAuthUser(user);
+            return _categoryManager.GetAll();
         }
 
         public EnumResult Add(Category category)

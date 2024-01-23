@@ -5,17 +5,19 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using System.Text;
+using Models;
 
 namespace Controllers
 {
     public class SharedController : Controller
     {
         private readonly IConfiguration _configuration;
-        protected User CurrentUser;
+        protected IUser CurrentUser;
 
-        public SharedController(IConfiguration configuration)
+        public SharedController(IConfiguration configuration, IUser user)
         {
             _configuration = configuration;
+            CurrentUser = user;
         }
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -44,7 +46,7 @@ namespace Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("error");
+                throw new Exception(ex.Message);
             }
         }
 

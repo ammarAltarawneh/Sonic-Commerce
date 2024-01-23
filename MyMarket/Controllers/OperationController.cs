@@ -1,8 +1,10 @@
-﻿using Azure;
-using BAL.Services;
+﻿using BAL.Services;
+using DAL.Managers;
 using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using MyMarket.Services;
 using static DAL.Enum;
 
 namespace Controllers
@@ -10,13 +12,36 @@ namespace Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class OperationController : ControllerBase
+    public class OperationController : SharedController
     {
         private readonly OperationService _operationService;
+        private readonly IUser _user;
 
-        public OperationController()
+        public OperationController(IConfiguration configuration, IUser user)
+            : base(configuration, user)
         {
-            _operationService = new OperationService();
+            _user = user;
+            _operationService = new OperationService(user);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllOperations()
+        {
+            try
+            {
+                var currentUser = CurrentUser;
+
+                if (currentUser != null)
+                {
+                    OperationService operations = new OperationService(currentUser);                    
+                    return Ok(operations.GetAll());
+                }
+                return Unauthorized(new { message = "User not authenticated." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
+            }
         }
 
         [HttpPost]
@@ -35,19 +60,6 @@ namespace Controllers
                     default:
                         return StatusCode(500, new { message = "Internal server error" });
                 }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Internal server error", error = ex.Message });
-            }
-        }
-
-        [HttpGet]
-        public IActionResult GetAllOperations()
-        {
-            try
-            {
-                return Ok(_operationService.GetAll());
             }
             catch (Exception ex)
             {

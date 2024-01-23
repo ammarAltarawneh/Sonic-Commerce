@@ -9,10 +9,11 @@ namespace BAL.Services
     public class OperationService
     {
         private readonly OperationManager _operationManager;
-
-        public OperationService()
+        private readonly IUser _user;
+        public OperationService(IUser user)
         {
-            _operationManager = new OperationManager();
+            _user = user;
+            _operationManager = new OperationManager(user);
         }
 
         public EnumResult Add(Operationn operation)

@@ -1,7 +1,9 @@
 using BAL.Services;
+using DAL.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Models;
 using MyMarket.Interface;
 using System.Text;
 
@@ -22,7 +24,7 @@ namespace MyMarket
             var connection = configuration.GetSection("DefaultConnection").Value;
 
              builder.Services.AddScoped(typeof(ICrudOperation<>), typeof(GenericRepository<>));
-            //builder.Services.AddScoped<User>();
+            builder.Services.AddScoped<IUser,User>();
 
 
             builder.Services.AddAuthentication(options =>
