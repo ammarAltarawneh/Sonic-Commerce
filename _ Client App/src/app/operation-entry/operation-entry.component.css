@@ -1,0 +1,14 @@
+.form-group {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the margin as needed */
+    width: 400px;
+  }
+
+  .left{
+    padding-left: 20px;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  .form-control{
+    width: 420px;
+  }

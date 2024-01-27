@@ -1,0 +1,46 @@
+<div class="container" style="margin-top: 100px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-6"  style="margin-bottom: 20px;">
+          <h1 style="color: red; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Operation List</h1>
+            <input
+                style="width: 800px;" 
+                type="text" 
+                class="form-control"
+                placeholder="Search for Operation Type.."
+                [(ngModel)]="FilterOperationType"
+                > 
+        </div>
+        <div class="col-xs-12 col-md-6" >
+            <button class="btn btn-success" style="margin-left: 240px;" (click)="onLoadOperationEntry()">Add New</button>
+        </div>
+    </div>              
+</div>
+<div class="table-responsive" style="width: 820px;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Operation ID</th>
+          <th>Type</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Net Total</th>
+          <th>Gross Total</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="operationsToDisplay.length > 0; else loading">
+        <tr *ngFor="let operation of operationsToDisplay | filterString:FilterOperationType:'operationTypeName'">
+          <td>{{operation.operationId}}</td>
+          <td>{{operation.operationTypeName}}</td>
+          <td>{{operation.customerName}}</td>
+          <td>{{operation.operationDate|date: 'short'}}</td>
+          <td>{{operation.netTotal | currency}}</td>
+          <td>{{operation.grossTotal | currency}}</td>
+        </tr>
+      </tbody>
+      <ng-template #loading>
+        <tr>
+          <td colspan="2">Loading operations...</td>
+        </tr>
+      </ng-template>
+    </table>
+</div>  

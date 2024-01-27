@@ -1,0 +1,34 @@
+<div id="modal-content-wrapper" style="width: 300px; margin: auto; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <h1>{{ data.mode === 'add' ? 'Add New Item' : (data.mode === 'edit' ? 'Edit Item' : 'Delete Item') }}</h1>
+    
+    <form #itemForm="ngForm" (ngSubmit)="onSubmitItem()">
+        
+        <div class="form-group" *ngIf="data.mode !== 'delete'">        
+        <label for="itemName" style="padding-right: 35px;">Item Name</label>
+        <input style="margin-left: 26px;" type="text" id="itemName" name="itemName" [(ngModel)]="newItemName" required>
+        <br>
+        <label for="price" style="padding-right: 51px;">Price JD</label>
+        <input style="margin-left: 27px;" type="number" id="price" name="price" [(ngModel)]="newItemPrice" required>
+        <br>
+        <label for="discount" style="padding-right: 49px;">Discount (%)</label>
+        <input type="number" id="discount" name="discount" [(ngModel)]="newItemDiscount">
+        <br>
+        <label for="tax" style="padding-right: 83px;">Tax (%)</label>
+        <input type="number" id="tax" name="tax" [(ngModel)]="newItemTax">
+        <br>
+        <label for="category" style="padding-right: 72px;">Category</label>
+        <select id="category" type="number" style="width: 167px;" name="category" [(ngModel)]="newItemCategoryId" required>
+          <option [value]="null">Select Category</option>  
+          <option *ngFor="let category of categoryArr" [value]="category.categoryId">{{ category.categoryName }}</option>
+        </select>
+        </div>
+        
+        <br>
+        <div style="padding-top: 10px;">
+            <button class="btn btn-primary" type="submit" [disabled]="(data.mode !== 'delete' && !itemForm.valid)">
+                {{ data.mode === 'delete' ? 'Delete' : 'Save' }}
+            </button>
+            <button class="btn btn-danger" (click)="onClose()" style="margin-left: 150px;">Close</button>
+        </div>
+    </form>
+</div>
