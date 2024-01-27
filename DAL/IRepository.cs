@@ -2,7 +2,7 @@
 
 namespace MyMarket.Interface
 {
-    public interface ICrudOperation<T>
+    public interface IRepository<T>
     {
         IEnumerable<T> GetAll(string sql);
         EnumResult Add(string sql);

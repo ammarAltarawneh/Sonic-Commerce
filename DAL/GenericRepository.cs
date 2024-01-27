@@ -4,7 +4,7 @@ using static DAL.Enum;
 
 namespace BAL.Services
 {
-    public class GenericRepository<T> : ICrudOperation<T> where T : class
+    public class GenericRepository<T> : IRepository<T> where T : class
     {
         private readonly _DbManager<T> _dbManager;
 

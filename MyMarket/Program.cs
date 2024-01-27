@@ -23,7 +23,7 @@ namespace MyMarket
 
             var connection = configuration.GetSection("DefaultConnection").Value;
 
-             builder.Services.AddScoped(typeof(ICrudOperation<>), typeof(GenericRepository<>));
+             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUser,User>();
 
 
